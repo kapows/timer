@@ -13,3 +13,4 @@ function(make_test name file)
 endfunction()
 
 make_test(countdown countdown.t.cpp)
+make_test(countup countup.t.cpp)

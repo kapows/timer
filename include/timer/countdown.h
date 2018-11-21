@@ -34,12 +34,12 @@ namespace timer
   public: // modifiers
     countdown & operator+=(Duration const & dt) noexcept
     {
-      end += dt;
+      end += std::chrono::duration_cast<typename Clock::duration>(dt);
       return *this;
     }
     countdown & operator-=(Duration const & dt) noexcept
     {
-      end -= dt;
+      end -= std::chrono::duration_cast<typename Clock::duration>(dt);
       return *this;
     }
   };

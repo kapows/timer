@@ -82,3 +82,34 @@ int main()
   return 0;
 }
 ```
+
+## Install
+
+### Shell
+
+```Shell
+git clone https://github.com/kapows/timer && cd timer
+mkdir build && cd build
+cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH
+cmake --build . --target install --config Release
+```
+
+### Cmake
+
+```Cmake
+find_package(timer CONFIG REQUIRED)
+target_link_libraries(main PRIVATE timer::timer)
+```
+
+## Develop
+
+### Shell
+
+```Shell
+vcpkg install catch2
+git clone https://github.com/kapows/timer && cd timer
+mkdir build && cd build
+cmake .. -G Ninja -DBUILD_TESTING=ON -DCMAKE_TOOLCHAIN_FILE=$VCPKG_PATH 
+cmake --build . --config Debug
+ctest
+```

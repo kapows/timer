@@ -18,12 +18,12 @@ namespace timer
   public: // modifiers
     countup & operator+=(Duration const & dt) noexcept
     {
-      start -= dt;
+      start -= std::chrono::duration_cast<typename Clock::duration>(dt);
       return *this;
     }
     countup & operator-=(Duration const & dt) noexcept
     {
-      start += dt;
+      start += std::chrono::duration_cast<typename Clock::duration>(dt);
       return *this;
     }
     auto consume() noexcept

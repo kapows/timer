@@ -15,6 +15,70 @@ These timers are not event based. They must be polled for their state. The count
 The count up timer is always "live", and the way to work with it is to either use its time elapsed, or
 to consume the time that it has elapsed as a whole, or consume that time in chunks.
 
-So if you need to wait some time to fire off something once, you'll probably go with the count down timer.
-If you want to work with delta time, you'll probably go with the count up timer and consume elapsed time as a whole.
-If you want to work with a fixed time step, you'll probably go with the count up timer and consume elapsed time in chunks.
+## Use
+
+Do something after a set period of time.
+
+```cpp
+#include <timer.h>
+#include <chrono>
+
+using namespace std::literals::chrono_literals;
+using namespace timer;
+
+int main()
+{
+  countdown<std::chrono::steady_clock> t = {10s};
+  while(t) {
+    // spin for 10 seconds
+  }
+  // Do something after 10 seconds
+  return 0;
+}
+```
+
+Do something every x seconds.
+
+```cpp
+#include <timer.h>
+#include <chrono>
+
+using namespace std::literals::chrono_literals;
+using namespace timer;
+
+int main()
+{
+  countup<std::chrono::steady_clock> t;
+  while(true) {
+    if(t.consume(3s)) {
+      cout << "Hello" << endl;
+    }
+  }
+  return 0;
+}
+```
+
+Update from last call.
+
+```cpp
+#include <timer.h>
+#include <chrono>
+
+using namespace std::literals::chrono_literals;
+using namespace timer;
+
+int main()
+{
+  timer::countup<std::chrono::steady_clock, std::chrono::duration<float>> t;
+  float position = 0.0f;
+  float velocity = 1.0f;
+
+  while (position < 100.0f)
+  {
+    auto dt = t.consume();
+    position = position + velocity * dt.count();
+    std::cout << position << std::endl;
+  }
+  return 0;
+}
+```

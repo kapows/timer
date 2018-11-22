@@ -63,6 +63,7 @@ Update from last call.
 ```cpp
 #include <timer.h>
 #include <chrono>
+#include <iostream>
 
 using namespace std::literals::chrono_literals;
 using namespace timer;
